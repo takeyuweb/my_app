@@ -68,6 +68,12 @@ group :development do
 
   # Add a comment summarizing the current schema
   gem 'annotate'
+
+  # Prettier for Ruby [https://github.com/prettier/plugin-ruby]
+  gem 'prettier_print'
+  gem 'syntax_tree'
+  gem 'syntax_tree-haml'
+  gem 'syntax_tree-rbs'
 end
 
 group :test do
