@@ -23,5 +23,19 @@
 require 'rails_helper'
 
 RSpec.describe BacketItem, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validation' do
+    describe 'quantity' do
+      def quantity_errors(quantity)
+        described_class.new(quantity:).tap { |record| record.valid? }.errors[:quantity]
+      end
+
+      example do
+        aggregate_failures do
+          expect(quantity_errors(nil)).to be_any
+          expect(quantity_errors(0)).to be_any
+          expect(quantity_errors(1)).to be_empty
+        end
+      end
+    end
+  end
 end
