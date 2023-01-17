@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_15_090735) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_17_045939) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_15_090735) do
   create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "my_api_keys", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "暗号化サンプル", force: :cascade do |t|
+    t.string "encrypted_key", null: false
+    t.string "key_salt", null: false
+    t.string "key_cipher", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
