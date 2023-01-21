@@ -1,0 +1,37 @@
+databases:
+  - name: my_app_db
+    databaseName: my_app
+    user: my_app
+    plan: free
+    region: singapore
+    postgresMajorVersion: 15
+
+services:
+  - type: web
+    name: my_app
+    env: ruby
+    plan: free
+    region: singapore
+    buildCommand: ./bin/render-build.sh
+    startCommand: bundle exec puma -C config/puma.rb
+    initialDeployHook: ./bin/render-initial-deploy.sh
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: my_app_db
+          property: connectionString
+      - key: WEB_CONCURRENCY
+        value: 2
+  - type: cron
+    name: my_app-cron-sample
+    env: ruby
+    plan: starter
+    region: singapore
+    buildCommand: ./bin/render-build.sh
+    startCommand: bundle exec rails runner "puts 'Hello'"
+    schedule: 0 0 * * *
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: my_app_db
+          property: connectionString
